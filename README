@@ -1,1 +1,13 @@
-Here's a readme file
+In this repo we have some accidentally included secret token that we have to completely purge from the history.
+
+Command to run to clean the tree in a single commit (in bash):
+
+for file in $(grep -rl "$secret" .); do sed -i "s/$secret/${secret//?/x}/g" $file ; done
+              ^ list offending files    ^ replace the secret with all 'x's
+
+Thus, the full commands might be:
+
+export secret='Gh0sv0ORNBrn@ZEQnI3$yGhXju#DY#sgnmw8m6xe'
+git filter-branch --tree-filter 'for file in $(grep -rl "$secret" .); do sed -i "s/$secret/${secret//?/x}/g" $file ; done' HEAD
+
+Try it yourself!
